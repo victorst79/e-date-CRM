@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1></h1>
+    <h1>PRUEBA LOGIN COMPONENTE</h1>
   </section>
 </template>
 
