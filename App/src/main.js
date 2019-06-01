@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-vue/dist/bootstrap-vue.css"
 
 Vue.use(VueMaterial);
 Vue.config.productionTip = false
