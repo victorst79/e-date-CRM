@@ -16,11 +16,16 @@
 				
 			</md-toolbar>
 		</div>
-		<router-view/>
+		<keep-alive>
+			<router-view/>
+		</keep-alive>
+		<md-toolbar md-elevation="0" class="footer row">
+			<span class="col-12 text-center">Developed by <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a>.</span>
+		</md-toolbar>
 	</div>
 </template>
 
-<style>
+<style lang="scss" scope>
 	div#nav{
 		background-color:#673ab7;
 	}
@@ -37,5 +42,24 @@
 	.md-button-content:hover{
 		color: white;
 		text-decoration: none !important;
+	}
+
+	.footer{
+		text-align: center;
+		background-color: black;
+
+		span{
+			color: white;
+
+			a{
+				color: #673ab7;
+				text-decoration: none;
+				
+				&:hover{
+					color: #673ab7;
+					text-decoration: none;
+				}
+			}
+		}
 	}
 </style>
