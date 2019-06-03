@@ -5,15 +5,11 @@
 			<md-toolbar class="md-accent" md-elevation="1">
 				<h3 class="md-title" style="flex: 1">E-Date</h3>				
 				<router-link to="/">
-					<md-button>Home</md-button>
+					<md-button>App</md-button>
 				</router-link>
 				<router-link to="/about">
 					<md-button>About</md-button>
-				</router-link>
-				<router-link to="/login">
-					<md-button>Login</md-button>
-				</router-link>
-				
+				</router-link>				
 			</md-toolbar>
 		</div>
 		<keep-alive>

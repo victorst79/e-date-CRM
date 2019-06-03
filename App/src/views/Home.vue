@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div id="home" v-if="stateUser == 'offline'">
-      <NoUser/>
+    <div id="user" v-if="stateUser == 'offline'">
+      <Login/>
     </div>
     <div id="user" v-if="stateUser == 'user'">
       <User/>
@@ -13,16 +13,16 @@
 </template>
 
 <script>
-import NoUser from '@/components/NoUser.vue'
+import Login from '@/components/Login.vue'
 import User from '@/components/User.vue'
 import Admin from '@/components/Admin.vue'
 
 export default {
   name: 'home',
   components: {
-    NoUser,
     User,
-    Admin
+    Admin,
+    Login
   },
   data: function(){
     return{

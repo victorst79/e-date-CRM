@@ -1,5 +1,16 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <section>
+      <NoUser/>    
+  </section>  
 </template>
+
+<script>
+import NoUser from '@/components/NoUser.vue'
+
+export default {
+  name: 'about',
+  components: {
+    NoUser
+  }
+}
+</script>
