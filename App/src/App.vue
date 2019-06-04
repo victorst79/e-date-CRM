@@ -15,8 +15,8 @@
 		<keep-alive>
 			<router-view/>
 		</keep-alive>
-		<md-toolbar md-elevation="0" class="footer row">
-			<span class="col-12 text-center">Developed by <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a>.</span>
+		<md-toolbar md-elevation="0" class="footer container-fluid">
+			<span class="col-12 text-center">Developed by <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a></span>
 		</md-toolbar>
 	</div>
 </template>
@@ -43,6 +43,7 @@
 	.footer{
 		text-align: center;
 		background-color: black;
+		width: 100vw;
 
 		span{
 			color: white;
