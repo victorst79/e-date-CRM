@@ -22,9 +22,15 @@
 </template>
 
 <style lang="scss" scope>
-	div#nav{
-		background-color:#673ab7;
-	}
+	@import "~vue-material/dist/theme/engine";
+	$primary: #7f39fb;
+	$secundary: #673ab7;
+	@include md-register-theme("default", (
+		primary: $primary, 
+		accent: $secundary 
+	));
+
+	@import "~vue-material/dist/theme/all";
 
 	#nav h3{
 		color: white;
@@ -42,7 +48,7 @@
 
 	.footer{
 		text-align: center;
-		background-color: black;
+		background-color: black !important;
 		width: 100vw;
 
 		span{
