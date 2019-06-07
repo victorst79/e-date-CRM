@@ -6,12 +6,12 @@
       </md-card-header>
       <md-field md-clearable class="offset-md-2 col-md-8 offset-1 col-10">
         <label>Usuario</label>
-        <md-input v-model="initial"></md-input>
+        <md-input></md-input>
       </md-field>
 
       <md-field class="offset-md-2 col-md-8 offset-1 col-10">
         <label>Contraseña</label>
-        <md-input v-model="password" type="password"></md-input>
+        <md-input type="password"></md-input>
       </md-field>
       <md-card-actions class="">
         <md-button class="boton-login">Create user</md-button>
