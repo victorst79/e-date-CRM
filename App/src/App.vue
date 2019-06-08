@@ -3,7 +3,9 @@
 		<!-- NAVBAR -->
 		<div id="nav">
 			<md-toolbar class="md-accent" md-elevation="1">
-				<h3 class="md-title" style="flex: 1">E-Date</h3>				
+				<h3 class="md-title" style="flex: 1">
+					<img src="./assets/e-date.png" alt="E-Date logotipo" class="logo">
+				</h3>				
 				<router-link to="/">
 					<md-button>App</md-button>
 				</router-link>
@@ -64,5 +66,9 @@
 				}
 			}
 		}
+	}
+
+	.logo{
+		width: 50px;
 	}
 </style>

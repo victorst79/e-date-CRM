@@ -19,14 +19,34 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-var usuarios;
+
 // GET USUARIOS FIREBASE
+
 var ref_usuarios = firebase.database().ref();
 ref_usuarios.child('usuarios').on("value", function(snapshot){
-    usuarios = snapshot.val();
+    
+    var usuarios = snapshot.val()
+    io.on('connection', function(socket){
+        // CONEXION NUEVA Y EMISION DE TODOS LOS USUARIOS DE FIREBASE
+        console.log("New Conexion");
+        socket.emit('usuarios',usuarios);
+
+        socket.on('userLogin', function(data) {
+            var userLoged = JSON.parse(data);
+
+            console.log(userLoged);
+            if(userLoged.rol == 'admin'){
+                socket.emit('rol_view', 'admin');
+            }else if(userLoged.rol == 'client'){
+                socket.emit('rol_view', 'client');
+            }
+        });
+
+    });
 });
 
-io.on('connection', function(socket){
-    console.log("New Conexion");
 
-});
+// io.on('connection', function(socket){
+//     console.log("New Conexion");
+//     socket.emit('usuarios',usuarios);
+// });

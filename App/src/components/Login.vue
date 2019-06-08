@@ -4,25 +4,68 @@
       <md-card-header class="offset-2 col-8">
         <div class="md-title">Iniciar Sesion</div>
       </md-card-header>
+      
       <md-field md-clearable class="offset-md-2 col-md-8 offset-1 col-10">
         <label>Usuario</label>
-        <md-input></md-input>
+        <md-input v-model="user"></md-input>
       </md-field>
 
       <md-field class="offset-md-2 col-md-8 offset-1 col-10">
         <label>Contraseña</label>
-        <md-input type="password"></md-input>
+        <md-input type="password" v-model="pass"></md-input>
       </md-field>
-      <md-card-actions class="">
-        <md-button class="boton-login">Create user</md-button>
-      </md-card-actions>
+
+      <div class="col-12">
+        <md-card-actions>
+          <md-button class="boton-login" v-on:click="login_app">Login</md-button>
+        </md-card-actions>
+      </div>
+        
      </md-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  props: {
+		stateUser: String
+	},
+  data: function() {
+    return{
+      firedb_user: [],
+      user: '',
+      pass: '',
+      rol: ''
+    }
+  },
+  methods: {
+    /**
+     * INICIO DE SESION DE USUARIO, ENVIA AL SOCKET DATOS PARA CONOCER AL USUARIO LOGEADO DURANTE LA SESION
+     * NO GUARDA EL ROL AUN
+     */
+    login_app: function() {
+      for(let i = 0; i < this.firedb_user.length; i++){
+        if(this.user == this.firedb_user[i].user && this.pass == this.firedb_user[i].pass ){
+          this.rol = this.firedb_user[i].rol;
+          this.$socket.emit('userLogin', JSON.stringify({user: this.user, rol: this.rol}));
+        }
+      }
+    }
+  },
+  sockets: {
+    connect: function () {
+      console.log('socket connected');
+    },
+    // OBTIENE TODOS LOS USUARIOS REGISTRADOS
+    usuarios: function(data) {
+      this.firedb_user = data;
+    },
+    // GUARDA EL TIPO DE ROL DE USUARIO
+    rol_view: function(data){
+      this.$root.$emit('nolose');
+    }
+  }
 }
 </script>
 

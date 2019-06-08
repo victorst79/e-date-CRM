@@ -1,12 +1,12 @@
 <template>
   <section>
-    <div id="user" v-if="stateUser == 'offline'">
-      <Login/>
+    <div id="login" v-if="stateApp == ''">
+      <Login stateUser/>
     </div>
-    <div id="user" v-if="stateUser == 'user'">
+    <div id="user" v-if="stateApp == 'user'">
       <User/>
     </div>
-    <div id="admin" v-if="stateUser == 'admin'">
+    <div id="admin" v-if="stateApp == 'admin'">
       <Admin/>
     </div>
   </section>  
@@ -26,7 +26,7 @@ export default {
   },
   data: function(){
     return{
-      stateUser: 'offline'
+      stateApp: ''
     }
   }
 }
