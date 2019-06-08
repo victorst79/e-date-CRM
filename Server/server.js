@@ -33,20 +33,16 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
 
         socket.on('userLogin', function(data) {
             var userLoged = JSON.parse(data);
+            console.log('Usuario identificado como '+ userLoged.user +', con rol '+ userLoged.rol);
 
-            console.log(userLoged);
             if(userLoged.rol == 'admin'){
                 socket.emit('rol_view', 'admin');
             }else if(userLoged.rol == 'client'){
                 socket.emit('rol_view', 'client');
             }
+
+            
         });
 
     });
 });
-
-
-// io.on('connection', function(socket){
-//     console.log("New Conexion");
-//     socket.emit('usuarios',usuarios);
-// });

@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import VueMaterial from 'vue-material'
 import VueSocketIO from 'vue-socket.io'
+import Notifications from 'vue-notification'
 import 'vue-material/dist/vue-material.min.css'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
@@ -11,7 +12,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 import 'vue-material/dist/vue-material.min.css'
 // import 'vue-material/dist/theme/default.css'
 Vue.use(VueMaterial);
-
+Vue.use(Notifications);
 // Vue.use(firestorePlugin)
 Vue.config.productionTip = false
 

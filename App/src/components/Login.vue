@@ -28,15 +28,14 @@
 <script>
 export default {
   name: 'Login',
-  props: {
-		stateUser: String
-	},
+  props: ['stateUser'],
   data: function() {
     return{
       firedb_user: [],
       user: '',
       pass: '',
-      rol: ''
+      rol: '',
+      state: this.stateUser
     }
   },
   methods: {
@@ -55,7 +54,7 @@ export default {
   },
   sockets: {
     connect: function () {
-      console.log('socket connected');
+      return true;
     },
     // OBTIENE TODOS LOS USUARIOS REGISTRADOS
     usuarios: function(data) {
@@ -63,7 +62,7 @@ export default {
     },
     // GUARDA EL TIPO DE ROL DE USUARIO
     rol_view: function(data){
-      this.$root.$emit('nolose');
+      this.stateUser = data;
     }
   }
 }
