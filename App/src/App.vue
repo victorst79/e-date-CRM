@@ -18,6 +18,7 @@
 			<router-view/>
 		</keep-alive>
 		<notifications group="error" position="top center"/>
+		<notifications group="login" position="top center"/>
 		<md-toolbar md-elevation="0" class="footer container-fluid">
 			<span class="col-12 text-center">Developed by <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a></span>
 		</md-toolbar>
@@ -30,23 +31,23 @@
 	$secundary: #673ab7;
 	@include md-register-theme("default", (
 		primary: $primary, 
-		accent: $secundary 
+		accent: $secundary
 	));
 
 	@import "~vue-material/dist/theme/all";
 
 	#nav h3{
 		color: white;
-	}
 
-	.md-button-content{
-		color: white;
-		text-decoration: none !important;
-	}
+		.md-button-content{
+			color: white;
+			text-decoration: none !important;
 
-	.md-button-content:hover{
-		color: white;
-		text-decoration: none !important;
+			&:hover{
+				color: white;
+				text-decoration: none !important;
+			}
+		}
 	}
 
 	.footer{

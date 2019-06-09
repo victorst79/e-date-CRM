@@ -37,12 +37,11 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
 
             if(userLoged.rol == 'admin'){
                 socket.emit('rol_view', 'admin');
+                // USUARIO LOGEADO COMO ADMINISTRADOR
             }else if(userLoged.rol == 'client'){
                 socket.emit('rol_view', 'client');
-            }
-
-            
+                // USUARIO LOGEADO COMO CLIENTE
+            }            
         });
-
     });
 });
