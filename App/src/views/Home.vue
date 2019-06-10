@@ -47,13 +47,7 @@
                   
                   <h4 class="titulo-reserva">Hora:</h4>
                   <div class="col-12 text-center botonera-horas">
-                    <md-button class="md-primary">08:00 - 09:00</md-button>
-                    <md-button class="md-primary">09:00 - 10:00</md-button>
-                    <md-button class="md-primary">10:00 - 11:00</md-button>
-                    <md-button class="md-primary">11:00 - 12:00</md-button>
-                    <md-button class="md-primary">16:00 - 17:00</md-button>
-                    <md-button class="md-primary">17:00 - 18:00</md-button>
-                    <md-button class="md-primary">18:00 - 19:00</md-button>
+                    <md-button class="md-primary" v-for="hora in horarios" v-bind:key="hora">{{hora}}</md-button>
                   </div>
 
                   <h4>Nota:</h4>
@@ -103,7 +97,9 @@ export default {
       rol: '',
       data: '',
       fecha: '',
-      nota: ''
+      nota: '',
+      todas_citas: '',
+      horarios: ''
     }
   },
   methods: {
@@ -151,6 +147,37 @@ export default {
     // GUARDA EL TIPO DE ROL DE USUARIO Y APLICA EL ESTADO
     rol_view: function(data){
       this.stateApp = data;
+    },
+    // OBTIENE TODA LA INFORMACION SOBRE EL LOCAL
+    all_local_info: function(data) {
+      var aux = JSON.parse(data);
+
+      for(var i = 0; i < aux.length; i++){
+        if(this.data.local == aux[i].salon){
+          // OBTIENE LAS CITAS
+          this.todas_citas = aux[i].citas;
+          // OBTIENE LOS HORARIOS 
+          this.horarios = aux[i].horarios;
+          return;
+        }
+      }      
+    }
+  },
+  computed: {
+    horarios_disponibles: function(){
+      var aux_horarios = [];
+      if(this.horarios && this.todas_citas){
+
+        for(var i = 0; i < this.horarios.length; i++){
+          for(var j = 0; j < this.todas_citas.length; j++){
+            
+            if(this.horarios[i] != this.todas_citas[j].hora){
+              aux_horarios.push(this.horarios[i]);
+            }
+          }
+        }
+        return aux_horarios;
+      }      
     }
   }
 }

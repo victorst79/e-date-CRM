@@ -22,6 +22,8 @@ firebase.initializeApp(firebaseConfig);
 
 // GET USUARIOS FIREBASE
 
+
+
 var ref_usuarios = firebase.database().ref();
 ref_usuarios.child('usuarios').on("value", function(snapshot){
     
@@ -35,13 +37,20 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
             var userLoged = JSON.parse(data);
             console.log('Usuario identificado como '+ userLoged.user +', con rol '+ userLoged.rol);
 
-            if(userLoged.rol == 'admin'){
-                socket.emit('rol_view', 'admin');
-                // USUARIO LOGEADO COMO ADMINISTRADOR
-            }else if(userLoged.rol == 'client'){
-                socket.emit('rol_view', 'client');
-                // USUARIO LOGEADO COMO CLIENTE
-            }            
+            ref_usuarios.child('locales').on("value", function(snapshot){
+                var local_info = snapshot.val();
+
+                if(userLoged.rol == 'admin'){
+                    socket.emit('rol_view', 'admin');
+                    socket.emit('all_local_info', JSON.stringify(local_info));
+                    // USUARIO LOGEADO COMO ADMINISTRADOR
+                }else if(userLoged.rol == 'client'){
+                    socket.emit('rol_view', 'client');
+                    socket.emit('all_local_info', JSON.stringify(local_info));
+                    // USUARIO LOGEADO COMO CLIENTE
+                }  
+            });
+                      
         });
     });
 });
