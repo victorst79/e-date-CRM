@@ -19,6 +19,7 @@
 		</keep-alive>
 		<notifications group="error" position="top center"/>
 		<notifications group="login" position="top center"/>
+		<notifications group="success" position="top center"/>
 		<md-toolbar md-elevation="0" class="footer container-fluid">
 			<span class="col-12 text-center">Developed by <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a></span>
 		</md-toolbar>

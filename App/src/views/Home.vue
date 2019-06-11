@@ -42,12 +42,12 @@
                 <div class="col-12">
                   <h3>Nueva Cita</h3>
                   <md-divider />
-                  <h4 class="titulo-reserva">Dia:</h4>
+                  <h4 class="titulo-reserva">Dia: {{fecha}}</h4>
                   <md-datepicker class="calendario-picker row" v-model="fecha"/>
                   
-                  <h4 class="titulo-reserva">Hora:</h4>
+                  <h4 class="titulo-reserva">Hora: {{hora}}</h4>
                   <div class="col-12 text-center botonera-horas">
-                    <md-button class="md-primary" v-for="hora in horarios" v-bind:key="hora">{{hora}}</md-button>
+                    <md-button class="md-primary" v-for="horas in horas_reservadas" v-bind:key="horas" v-on:click="set_hora(horas)">{{horas}}</md-button>
                   </div>
 
                   <h4>Nota:</h4>
@@ -97,6 +97,7 @@ export default {
       rol: '',
       data: '',
       fecha: '',
+      hora: '',
       nota: '',
       todas_citas: '',
       horarios: ''
@@ -131,9 +132,24 @@ export default {
         text: 'Los credenciales indicados no son correctos'
       });
     },
+    set_hora: function(hora){
+      this.hora = hora;
+    },
     // REALIZAR RESERVA
-    reservar: function(hora){
-      
+    reservar: function(){
+      var nueva_cita = {
+        dia: this.feacha,
+        hora: this.hora,
+        nota: this.nota,
+        cliente: this.user
+      }
+      this.$socket.emit('new_reserva', JSON.stringify(nueva_cita));
+      this.$notify({
+            group: 'success',
+            title: 'Reserva Realizada',
+            text: 'Seras notificado cuando tu reserva sea aceptada'
+          });
+      data.cita.pendiente = true;
     }
   },
   sockets: {
@@ -165,20 +181,30 @@ export default {
   },
   computed: {
     horarios_disponibles: function(){
-      var aux_horarios = [];
+      var aux_disponibles = [];      
       if(this.horarios && this.todas_citas){
+        for(var i = 0; i < this.todas_citas.length; i++){
+          aux_disponibles.push(this.todas_citas[i].hora);
+        }
+        return aux_disponibles;
+      }
+    },
+    horas_reservadas: function(){
+      var aux_reservadas = this.horarios;
 
+      if(this.horarios && this.horarios_disponibles){
         for(var i = 0; i < this.horarios.length; i++){
-          for(var j = 0; j < this.todas_citas.length; j++){
-            
-            if(this.horarios[i] != this.todas_citas[j].hora){
-              aux_horarios.push(this.horarios[i]);
+          for(var j = 0; j < this.horarios_disponibles.length; j++){
+
+            if(this.horarios[i] == this.horarios_disponibles[j]){
+              aux_reservadas.splice(i,1);
             }
+
           }
         }
-        return aux_horarios;
-      }      
-    }
+        return aux_reservadas;
+      }
+    }    
   }
 }
 </script>

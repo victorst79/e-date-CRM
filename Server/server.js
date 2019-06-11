@@ -16,14 +16,9 @@ var firebaseConfig = {
     messagingSenderId: "570681216054",
     appId: "1:570681216054:web:5cf494038585e6a2"
 };
-
 firebase.initializeApp(firebaseConfig);
 
-
-// GET USUARIOS FIREBASE
-
-
-
+// EVENTOS APP
 var ref_usuarios = firebase.database().ref();
 ref_usuarios.child('usuarios').on("value", function(snapshot){
     
@@ -41,13 +36,16 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                 var local_info = snapshot.val();
 
                 if(userLoged.rol == 'admin'){
+                    // USUARIO LOGEADO COMO ADMINISTRADOR
                     socket.emit('rol_view', 'admin');
                     socket.emit('all_local_info', JSON.stringify(local_info));
-                    // USUARIO LOGEADO COMO ADMINISTRADOR
+                    
                 }else if(userLoged.rol == 'client'){
+                    // USUARIO LOGEADO COMO CLIENTE
                     socket.emit('rol_view', 'client');
                     socket.emit('all_local_info', JSON.stringify(local_info));
-                    // USUARIO LOGEADO COMO CLIENTE
+                    
+
                 }  
             });
                       
