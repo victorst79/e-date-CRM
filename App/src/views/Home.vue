@@ -57,7 +57,7 @@
                   </md-field>
 
                   <div class="offset-11">
-                    <md-button class="md-primary">Reservar</md-button>  
+                    <md-button class="md-primary" v-on:click="reservar">Reservar</md-button>  
                   </div>                  
                 </div>
               </section>
@@ -138,7 +138,7 @@ export default {
     // REALIZAR RESERVA
     reservar: function(){
       var nueva_cita = {
-        dia: this.feacha,
+        dia: this.fecha,
         hora: this.hora,
         nota: this.nota,
         cliente: this.user
@@ -149,7 +149,7 @@ export default {
             title: 'Reserva Realizada',
             text: 'Seras notificado cuando tu reserva sea aceptada'
           });
-      data.cita.pendiente = true;
+      this.data.cita.pendiente = true;
     }
   },
   sockets: {

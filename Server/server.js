@@ -6,6 +6,17 @@ var app = express();
 var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 
+// FUNCIONES
+function nueva_reservaBD(cliente,dia,hora,nota){
+    var reservasRealizadasDB = firebase.database().ref('locales/0/citas');
+    var reserva = reservasRealizadasDB.push({
+        cliente: cliente,
+        dia: dia,
+        hora: hora,
+        nota: nota   
+    });
+}
+
 // FIREBASE CONFIG
 var firebaseConfig = {
     apiKey: "AIzaSyA2w3M6RazrNteKGb0SoyaLuEG81xu7anA",
@@ -45,8 +56,21 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                     socket.emit('rol_view', 'client');
                     socket.emit('all_local_info', JSON.stringify(local_info));
                     
+                    socket.on('new_reserva', function (data) {
+                        var nueva_reserva = JSON.parse(data);
+                        
+                        // firebase.database().ref('locales/0/citas').push({
+                        //     cliente: nueva_reserva.user,
+                        //     dia: nueva_reserva.fecha,
+                        //     hora: nueva_reserva.hora,
+                        //     nota: nueva_reserva.nota                            
+                        // });
+                        nueva_reservaBD(nueva_reserva.user, nueva_reserva.fecha, nueva_reserva.hora, nueva_reserva.nota);
+                        console.log('Reserva realiza');
 
+                    });
                 }  
+
             });
                       
         });
