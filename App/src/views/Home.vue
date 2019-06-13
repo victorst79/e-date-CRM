@@ -32,12 +32,12 @@
 
     <!-- CLIENTE COMPONENTE -->
     <div id="user" v-if="stateApp == 'client'">
-      <h2 class="text-center">{{data.local}}</h2>
+      <h2 class="text-center titulo-local">{{data.local}}</h2>
       <md-card class="container">
         <md-card-header class="offset-2 col-8">
           <div id="citas">
             <!-- RESERVAR -->
-            <div class="container" v-if="data.cita.pendiente == false">
+            <div class="container" v-if="data.cita.pendiente == 'sin cita'">
               <section class="row">
                 <div class="col-12">
                   <h3>Nueva Cita</h3>
@@ -63,8 +63,24 @@
               </section>
             </div>  
             <!-- RESERVADA -->
-            <div v-if="data.cita.pendiente == true">
-              
+            <div v-if="data.cita.pendiente == 'reserva'">
+              <section class="row">
+                <div class="col-12">
+                  <h3>Cita Reservada</h3>
+                  <md-divider />
+                  <h5>Tu cita sera revisada por un administrador, cuando sea confirmada recibiras una notificacion.</h5>
+                </div>
+              </section>
+            </div>
+            <!-- ACEPTADA -->
+            <div v-if="data.cita.pendiente == 'confirmada'">
+              <section class="row">
+                <div class="col-12">
+                  <h3>Cita Confirmada</h3>
+                  <md-divider />
+                  <h5>Tu cita ha sido revisada y confirmada por un administrador.</h5>
+                </div>
+              </section>
             </div>
           </div>
         </md-card-header>
@@ -74,10 +90,61 @@
     
     <!-- ADMIN COMPONENTE -->
     <div id="admin" v-if="stateApp == 'admin'">
+      <h2 class="text-center titulo-local">{{data.local}} - Panel Administrador</h2>
       <md-card class="container">
-        <md-card-header class="offset-2 col-8">
-          <div class="md-title">{{data.local}}</div>
-        </md-card-header>
+        <section class="row">
+          <div class="col-12">
+            <div class="md-title text-center">Citas Pendientes</div>
+            <md-table>
+              <md-table-row>
+                <md-table-head md-numeric>ID</md-table-head>
+                <md-table-head>Producto</md-table-head>
+                <md-table-head>Unidades</md-table-head>
+                <md-table-head>Precio de Venta</md-table-head>
+              </md-table-row>
+              <md-table-row v-for="item in inventario" v-bind:key="item">
+                <md-table-cell md-numeric>{{item.id}}</md-table-cell>
+                <md-table-cell>{{item.producto}}</md-table-cell>
+                <md-table-cell>{{item.unidades}}</md-table-cell>
+                <md-table-cell>{{item.venta}}</md-table-cell>
+              </md-table-row>
+            </md-table>
+          </div>
+          <div class="col-12">
+            <div class="md-title text-center">Citas Aceptadas</div>
+            <md-table>
+              <md-table-row>
+                <md-table-head md-numeric>ID</md-table-head>
+                <md-table-head>Producto</md-table-head>
+                <md-table-head>Unidades</md-table-head>
+                <md-table-head>Precio de Venta</md-table-head>
+              </md-table-row>
+              <md-table-row v-for="item in inventario" v-bind:key="item">
+                <md-table-cell md-numeric>{{item.id}}</md-table-cell>
+                <md-table-cell>{{item.producto}}</md-table-cell>
+                <md-table-cell>{{item.unidades}}</md-table-cell>
+                <md-table-cell>{{item.venta}}</md-table-cell>
+              </md-table-row>
+          </md-table>
+          </div>
+          <div id="inventario" class="col-12">
+            <div class="md-title text-center">Inventario</div>
+            <md-table>
+              <md-table-row>
+                <md-table-head md-numeric>ID</md-table-head>
+                <md-table-head>Producto</md-table-head>
+                <md-table-head>Unidades</md-table-head>
+                <md-table-head>Precio de Venta</md-table-head>
+              </md-table-row>
+              <md-table-row v-for="item in inventario" v-bind:key="item">
+                <md-table-cell md-numeric>{{item.id}}</md-table-cell>
+                <md-table-cell>{{item.producto}}</md-table-cell>
+                <md-table-cell>{{item.unidades}}</md-table-cell>
+                <md-table-cell>{{item.venta}}</md-table-cell>
+              </md-table-row>
+          </md-table>
+          </div>
+        </section>
       </md-card>
     </div>
     <!-- FIN ADMIN COMPONENTE -->
@@ -100,7 +167,8 @@ export default {
       hora: '',
       nota: '',
       todas_citas: '',
-      horarios: ''
+      horarios: '',
+      inventario: ''
     }
   },
   methods: {
@@ -149,7 +217,7 @@ export default {
             title: 'Reserva Realizada',
             text: 'Seras notificado cuando tu reserva sea aceptada'
           });
-      this.data.cita.pendiente = true;
+      this.data.cita.pendiente = 'reserva';
     }
   },
   sockets: {
@@ -177,6 +245,11 @@ export default {
           return;
         }
       }      
+    },
+    // OBTIENE TODOS LOS DATOS DEL INVENTARIO
+    inventario: function (data){
+      var aux = JSON.parse(data);
+      this.inventario = aux[0].inventario
     }
   },
   computed: {
@@ -221,7 +294,7 @@ export default {
     padding: 50px 0px;
   }
 
-  #user{
+  #user, #admin{
     padding: 50px 0px;
   }
 
@@ -230,6 +303,10 @@ export default {
       background: #673ab7;
       color: white !important;
     }
+  }
+
+  .titulo-local{
+    margin-bottom: 25px;
   }
 
   // COMPONENTE RESERVAR CITAS

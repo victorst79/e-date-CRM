@@ -7,13 +7,14 @@ var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 
 // FUNCIONES
-function nueva_reservaBD(cliente,dia,hora,nota){
-    var reservasRealizadasDB = firebase.database().ref('locales/0/citas');
-    var reserva = reservasRealizadasDB.push({
-        cliente: cliente,
-        dia: dia,
-        hora: hora,
-        nota: nota   
+function nueva_reservaBD(datos_reserva,id){
+    var reservasRealizadasDB = firebase.database().ref('locales/0/citas/'+id);
+    var reserva = reservasRealizadasDB.set({
+        cliente: datos_reserva.cliente,
+        dia: datos_reserva.dia,
+        hora: datos_reserva.hora,
+        nota: datos_reserva.nota,
+        estado: 'pendiente'
     });
 }
 
@@ -50,22 +51,18 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                     // USUARIO LOGEADO COMO ADMINISTRADOR
                     socket.emit('rol_view', 'admin');
                     socket.emit('all_local_info', JSON.stringify(local_info));
-                    
+                    // INFORMACION DEL INVENTARIO
+                    socket.emit('inventario', JSON.stringify(local_info));
                 }else if(userLoged.rol == 'client'){
                     // USUARIO LOGEADO COMO CLIENTE
                     socket.emit('rol_view', 'client');
                     socket.emit('all_local_info', JSON.stringify(local_info));
-                    
+                    // REALIZA UNA RESERVA Y SE GUARDA EN FIREBASE
                     socket.on('new_reserva', function (data) {
                         var nueva_reserva = JSON.parse(data);
-                        
-                        // firebase.database().ref('locales/0/citas').push({
-                        //     cliente: nueva_reserva.user,
-                        //     dia: nueva_reserva.fecha,
-                        //     hora: nueva_reserva.hora,
-                        //     nota: nueva_reserva.nota                            
-                        // });
-                        nueva_reservaBD(nueva_reserva.user, nueva_reserva.fecha, nueva_reserva.hora, nueva_reserva.nota);
+                        var reservas_longitud = local_info[0].citas.length;
+                        // RESERVA REALIZADA
+                        nueva_reservaBD(nueva_reserva,reservas_longitud);
                         console.log('Reserva realiza');
 
                     });
