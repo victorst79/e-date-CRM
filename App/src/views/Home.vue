@@ -94,41 +94,53 @@
       <md-card class="container">
         <section class="row">
           <div class="col-12">
-            <div class="md-title text-center">Citas Pendientes</div>
+            <div class="md-title text-center titulo-seccion">Citas Pendientes</div>
+            <md-divider />
             <md-table>
               <md-table-row>
-                <md-table-head md-numeric>ID</md-table-head>
-                <md-table-head>Producto</md-table-head>
-                <md-table-head>Unidades</md-table-head>
-                <md-table-head>Precio de Venta</md-table-head>
+                <md-table-head>Cliente</md-table-head>
+                <md-table-head>Dia</md-table-head>
+                <md-table-head>Hora</md-table-head>
+                <md-table-head>Nota Cliente</md-table-head>
+                <md-table-head>Acciones</md-table-head>
               </md-table-row>
-              <md-table-row v-for="item in inventario" v-bind:key="item">
-                <md-table-cell md-numeric>{{item.id}}</md-table-cell>
-                <md-table-cell>{{item.producto}}</md-table-cell>
-                <md-table-cell>{{item.unidades}}</md-table-cell>
-                <md-table-cell>{{item.venta}}</md-table-cell>
+              <md-table-row v-for="pendiente in citas_pendientes" v-bind:key="pendiente">
+                  <md-table-cell>{{pendiente.cliente}}</md-table-cell>
+                  <md-table-cell>{{pendiente.dia}}</md-table-cell>
+                  <md-table-cell>{{pendiente.hora}}</md-table-cell>
+                  <md-table-cell>{{pendiente.nota}}</md-table-cell>
+                  <md-table-cell>
+                    <span v-on:click="confirmar_cita(pendiente)">
+                      <md-icon class="aceptar-icono">done</md-icon>
+                    </span>
+                    <span v-on:click="cancelar_cita(pendiente)">
+                      <md-icon class="cancelar-icono">clear</md-icon>
+                    </span>                    
+                  </md-table-cell>
               </md-table-row>
             </md-table>
           </div>
           <div class="col-12">
-            <div class="md-title text-center">Citas Aceptadas</div>
+            <div class="md-title text-center titulo-seccion">Citas Aceptadas</div>
+            <md-divider />
             <md-table>
               <md-table-row>
-                <md-table-head md-numeric>ID</md-table-head>
-                <md-table-head>Producto</md-table-head>
-                <md-table-head>Unidades</md-table-head>
-                <md-table-head>Precio de Venta</md-table-head>
+                <md-table-head>Cliente</md-table-head>
+                <md-table-head>Dia</md-table-head>
+                <md-table-head>Hora</md-table-head>
+                <md-table-head>Nota Cliente</md-table-head>
               </md-table-row>
-              <md-table-row v-for="item in inventario" v-bind:key="item">
-                <md-table-cell md-numeric>{{item.id}}</md-table-cell>
-                <md-table-cell>{{item.producto}}</md-table-cell>
-                <md-table-cell>{{item.unidades}}</md-table-cell>
-                <md-table-cell>{{item.venta}}</md-table-cell>
+              <md-table-row v-for="aceptada in citas_aceptadas" v-bind:key="aceptada">
+                  <md-table-cell>{{aceptada.cliente}}</md-table-cell>
+                  <md-table-cell>{{aceptada.dia}}</md-table-cell>
+                  <md-table-cell>{{aceptada.hora}}</md-table-cell>
+                  <md-table-cell>{{aceptada.nota}}</md-table-cell>
               </md-table-row>
-          </md-table>
+            </md-table>
           </div>
           <div id="inventario" class="col-12">
-            <div class="md-title text-center">Inventario</div>
+            <div class="md-title text-center titulo-seccion">Inventario</div>
+            <md-divider />
             <md-table>
               <md-table-row>
                 <md-table-head md-numeric>ID</md-table-head>
@@ -213,11 +225,31 @@ export default {
       }
       this.$socket.emit('new_reserva', JSON.stringify(nueva_cita));
       this.$notify({
-            group: 'success',
-            title: 'Reserva Realizada',
-            text: 'Seras notificado cuando tu reserva sea aceptada'
-          });
+        group: 'success',
+        title: 'Reserva Realizada',
+        text: 'Seras notificado cuando tu reserva sea aceptada.'
+      });
       this.data.cita.pendiente = 'reserva';
+    },
+    // CANCELAR UNA CITA
+    cancelar_cita: function(cita_pendiente){
+      this.$socket.emit('cancelar_reserva', cita_pendiente.id);
+      this.$notify({
+        group: 'success',
+        title: 'Reserva Cancelada',
+        text: 'Se ha cancelado la reserva, el usuario se ha notificado.'
+      });
+      vm.$forceUpdate();
+    },
+    // ACEPTAR UNA CITA
+    confirmar_cita: function(cita_pendiente){
+      this.$socket.emit('confirmar_reserva', cita_pendiente.id);
+      this.$notify({
+        group: 'success',
+        title: 'Reserva Confirmada',
+        text: 'Se ha confirmado la reserva, el usuario se ha notificado.'
+      });
+      vm.$forceUpdate();
     }
   },
   sockets: {
@@ -277,7 +309,31 @@ export default {
         }
         return aux_reservadas;
       }
-    }    
+    },
+    // CITAS ACEPTADAS FIREBASE
+    citas_aceptadas: function (){
+      var citas_aceptadas = [];
+      if(this.todas_citas){
+        for(var i = 0; i < this.todas_citas.length; i++){
+          if(this.todas_citas[i].estado == 'confirmada'){
+            citas_aceptadas.push(this.todas_citas[i]);
+          }
+        }
+        return citas_aceptadas;
+      }
+    },
+    // CITAS PENDIENTES FIREBASE
+    citas_pendientes: function (){
+      var citas_pendientes = [];
+      if(this.todas_citas){
+        for(var i = 0; i < this.todas_citas.length; i++){
+          if(this.todas_citas[i].estado == 'pendiente'){
+            citas_pendientes.push(this.todas_citas[i]);
+          }
+        }
+        return citas_pendientes;
+      }
+    }
   }
 }
 </script>
@@ -331,6 +387,20 @@ export default {
 
     .titulo-reserva{
       margin-top: 15px;
+    }
+  }
+
+  #admin{
+    .aceptar-icono{
+      color: green !important;
+    }
+
+    .cancelar-icono{
+      color: red !important;
+    }
+
+    .titulo-seccion{
+      margin: 15px 0px;
     }
   }
 </style>

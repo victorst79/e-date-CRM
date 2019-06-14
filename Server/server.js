@@ -7,14 +7,30 @@ var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 
 // FUNCIONES
+// NUEVA RESERVA
 function nueva_reservaBD(datos_reserva,id){
     var reservasRealizadasDB = firebase.database().ref('locales/0/citas/'+id);
     var reserva = reservasRealizadasDB.set({
+        id: id,
         cliente: datos_reserva.cliente,
         dia: datos_reserva.dia,
         hora: datos_reserva.hora,
         nota: datos_reserva.nota,
         estado: 'pendiente'
+    });
+}
+
+// CANCELAR RESERVA
+function cancelar_reservaBD(id){
+    var reservasRealizadasDB = firebase.database().ref('locales/0/citas/'+id);
+    var cancelar = reservasRealizadasDB.set({});
+}
+
+// ACEPTAR RESERVA
+function aceptar_reservaBD(id){
+    var reservasRealizadasDB = firebase.database().ref('locales/0/citas/'+id);
+    var cancelar = reservasRealizadasDB.update({
+        estado: 'confirmada'
     });
 }
 
@@ -51,16 +67,30 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                     // USUARIO LOGEADO COMO ADMINISTRADOR
                     socket.emit('rol_view', 'admin');
                     socket.emit('all_local_info', JSON.stringify(local_info));
+                    
                     // INFORMACION DEL INVENTARIO
                     socket.emit('inventario', JSON.stringify(local_info));
+
+                    // CANCELAR CITA
+                    socket.on('cancelar_reserva', function(data){
+                        cancelar_reservaBD(data);
+                        console.log('Reserva Cancelada con id: '+data);
+                    });
+                    
+                    socket.on('confirmar_reserva', function(data){
+                        aceptar_reservaBD(data);
+                        console.log('Reserva Aceptada con id: '+data);
+                    });
                 }else if(userLoged.rol == 'client'){
                     // USUARIO LOGEADO COMO CLIENTE
                     socket.emit('rol_view', 'client');
                     socket.emit('all_local_info', JSON.stringify(local_info));
+
                     // REALIZA UNA RESERVA Y SE GUARDA EN FIREBASE
                     socket.on('new_reserva', function (data) {
                         var nueva_reserva = JSON.parse(data);
                         var reservas_longitud = local_info[0].citas.length;
+
                         // RESERVA REALIZADA
                         nueva_reservaBD(nueva_reserva,reservas_longitud);
                         console.log('Reserva realiza');
