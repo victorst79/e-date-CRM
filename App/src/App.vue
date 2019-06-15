@@ -7,11 +7,14 @@
 					<img src="./assets/e-date.png" alt="E-Date logotipo" class="logo">
 				</h3>				
 				<router-link to="/">
-					<md-button>App</md-button>
+					<md-button>Inicio</md-button>
 				</router-link>
 				<router-link to="/about">
-					<md-button>About</md-button>
-				</router-link>				
+					<md-button>¿Que somos?</md-button>
+				</router-link>
+				<router-link to="/registrer">
+					<md-button>Registro</md-button>
+				</router-link>					
 			</md-toolbar>
 		</div>
 		<keep-alive>

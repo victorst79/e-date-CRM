@@ -154,8 +154,13 @@
                 <md-table-cell>{{item.unidades}}</md-table-cell>
                 <md-table-cell>{{item.venta}}</md-table-cell>
               </md-table-row>
-          </md-table>
+          </md-table>          
           </div>
+          <div class="offset-10">
+            <md-button class="md-fab md-mini md-primary">
+              <md-icon>add</md-icon>
+            </md-button>
+          </div>          
         </section>
       </md-card>
     </div>
