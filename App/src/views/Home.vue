@@ -139,7 +139,11 @@
             </md-table>
           </div>
           <div id="inventario" class="col-12">
-            <div class="md-title text-center titulo-seccion">Inventario</div>
+            <div class="md-title text-center titulo-seccion">Inventario 
+              <md-button class="md-icon-button" @click="showDialog = true">
+                <md-icon>add</md-icon>
+              </md-button>
+            </div>
             <md-divider />
             <md-table>
               <md-table-row>
@@ -155,16 +159,40 @@
                 <md-table-cell>{{item.venta}}</md-table-cell>
               </md-table-row>
           </md-table>          
-          </div>
-          <div class="offset-10">
-            <md-button class="md-fab md-mini md-primary">
-              <md-icon>add</md-icon>
-            </md-button>
-          </div>          
+          </div>         
         </section>
       </md-card>
     </div>
     <!-- FIN ADMIN COMPONENTE -->
+  <md-dialog :md-active.sync="showDialog">
+      <md-dialog-title>Añadir nuevo producto</md-dialog-title>
+
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="Stock">
+          <h5>Rellena los campos para el nuevo producto</h5>
+          <md-field>
+            <label>Producto</label>
+            <md-textarea v-model="nombre_producto" md-autogrow></md-textarea>
+          </md-field>
+
+          <md-field>
+            <label>Unidades</label>
+            <md-textarea v-model="unidades_producto" type="number" md-autogrow></md-textarea>
+          </md-field>
+
+          <md-field>
+            <label>Precio de Venta</label>
+            <md-textarea v-model="precio_producto" md-autogrow></md-textarea>
+          </md-field>
+          <small>Añadir el valor de moneda (€)</small>
+        </md-tab>
+      </md-tabs>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Cancelar</md-button>
+        <md-button class="md-primary" @click="showDialog = false" v-on:click="add_stock">Añadir</md-button>
+      </md-dialog-actions>
+    </md-dialog>
   </section>  
 </template>
 
@@ -185,7 +213,12 @@ export default {
       nota: '',
       todas_citas: '',
       horarios: '',
-      inventario: ''
+      inventario: '',
+      showDialog: false,
+      nombre_producto: '',
+      unidades_producto: '',
+      precio_producto: '',
+      id_producto: ''
     }
   },
   methods: {
@@ -244,7 +277,6 @@ export default {
         title: 'Reserva Cancelada',
         text: 'Se ha cancelado la reserva, el usuario se ha notificado.'
       });
-      vm.$forceUpdate();
     },
     // ACEPTAR UNA CITA
     confirmar_cita: function(cita_pendiente){
@@ -254,7 +286,19 @@ export default {
         title: 'Reserva Confirmada',
         text: 'Se ha confirmado la reserva, el usuario se ha notificado.'
       });
-      vm.$forceUpdate();
+    },
+    // AÑADIR PRODUCTO AL STOCK DEL INVENTARIO
+    add_stock: function(){
+      // ID PRODUCTO NUEVO
+      this.id_producto = this.inventario.length;
+      
+      var nuevo_producto = {
+        id: this.id_producto,
+        producto: this.nombre_producto,
+        unidades: this.unidades_producto,
+        venta: this.precio_producto
+      };
+      this.$socket.emit('nuevo_producto', nuevo_producto);
     }
   },
   sockets: {

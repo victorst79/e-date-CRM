@@ -34,6 +34,17 @@ function aceptar_reservaBD(id){
     });
 }
 
+// ACEPTAR RESERVA
+function add_productoBD(datos_producto){
+    var reservasRealizadasDB = firebase.database().ref('locales/0/inventario/'+datos_producto.id);
+    var producto = reservasRealizadasDB.set({
+        id: datos_producto.id,
+        producto: datos_producto.producto,
+        unidades: datos_producto.unidades,
+        venta: datos_producto.venta
+    });
+}
+
 // FIREBASE CONFIG
 var firebaseConfig = {
     apiKey: "AIzaSyA2w3M6RazrNteKGb0SoyaLuEG81xu7anA",
@@ -77,9 +88,17 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                         console.log('Reserva Cancelada con id: '+data);
                     });
                     
+                    // CONFIRMAR RESERVA
                     socket.on('confirmar_reserva', function(data){
                         aceptar_reservaBD(data);
                         console.log('Reserva Aceptada con id: '+data);
+                    });
+
+                    // AÑADIR PRODUCTO A STOCK
+                    socket.on('nuevo_producto', function(data){
+                        var datos_producto = data;
+                        add_productoBD(datos_producto);
+                        console.log('Producto añadido: '+data.producto);
                     });
                 }else if(userLoged.rol == 'client'){
                     // USUARIO LOGEADO COMO CLIENTE
@@ -94,7 +113,6 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                         // RESERVA REALIZADA
                         nueva_reservaBD(nueva_reserva,reservas_longitud);
                         console.log('Reserva realiza');
-
                     });
                 }  
 
