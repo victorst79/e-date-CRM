@@ -3,7 +3,7 @@
     <div class="no-user-head">
         <h1>E-Date</h1>
         <p>Cliente y Negocio mas cerca que nunca</p>
-        <md-button class="md-raised md-primary">Unete</md-button>
+        <md-button class="md-raised md-primary" to="/Registrer">Unete</md-button>
     </div>
     <div class="no-user-content container">
         <div class="row">
@@ -72,7 +72,7 @@
 
 <script>
 export default {
-  name: 'NoUser'
+    name: 'NoUser'
 }
 </script>
 

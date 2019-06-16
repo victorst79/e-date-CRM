@@ -3,6 +3,12 @@
     <!-- LOGIN COMPONENT -->
     <div id="login" v-if="stateApp == 'offline'">
       <div class="form-login container">
+        <div class="row">
+          <span class="col-12 text-center">
+            <img src="../assets/e-date.png" alt="Logotipo E-Date" class="logo-edate">
+          </span>
+        </div>
+        
         <md-card class="row">
 
           <md-card-header class="offset-2 col-8">
@@ -52,7 +58,7 @@
 
                   <h4>Nota:</h4>
                   <md-field>
-                    <label>Nota para el establecimiento</label>
+                    <label></label>
                     <md-textarea v-model="nota" md-autogrow></md-textarea>
                   </md-field>
 
@@ -388,6 +394,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .logo-edate{
+    width: 125px;
+    margin-bottom: 25px;
+  }
+
   .md-progress-bar {
     position: absolute;
     top: 0;

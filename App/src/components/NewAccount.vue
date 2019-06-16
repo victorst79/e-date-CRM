@@ -1,6 +1,11 @@
 <template>
   <section id="registro">
         <div class="form-login container">
+            <div class="row">
+              <span class="col-12 text-center">
+                <img src="../assets/e-date.png" alt="Logotipo E-Date" class="logo-edate">
+              </span>
+            </div>
             <md-card class="row">
 
                 <md-card-header class="offset-2 col-8">
@@ -29,7 +34,7 @@
 
                 <div class="col-12">
                 <md-card-actions>
-                    <md-button class="boton-login" v-on:click="login_app">Login</md-button>
+                    <md-button class="boton-login" v-on:click="login_app">Registrar</md-button>
                 </md-card-actions>
                 </div>
                 
@@ -46,6 +51,12 @@ export default {
 
 
 <style lang="scss" scope>
+
+  .logo-edate{
+    width: 125px;
+    margin-bottom: 25px;
+  }
+
 
 .form-login{
     padding: 50px 0px;
