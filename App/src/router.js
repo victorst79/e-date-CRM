@@ -22,6 +22,11 @@ export default new Router({
       path: '/registrer',
       name: 'registrer',
       component: Registrer
+    },
+    {
+      path: '/*',
+      name: 'error',
+      component: Home
     }
   ]
 })
