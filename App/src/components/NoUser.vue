@@ -43,27 +43,23 @@
                 </h3>
             </div>
             <div class="col-12">
-                <div class="row">
-                    <div class="col-12 pasos-explicacion">
-                        <md-steppers md-vertical>
-                            <md-step id="first" md-label="¿Por que lo necesitas?">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi accusantium hic alias nam ullam tenetur possimus dolorem officia aperiam. Cumque hic enim voluptas ratione accusamus quasi eaque amet labore doloribus?</p>
-                            </md-step>
+                <md-steppers md-vertical>
+                    <md-step id="first" md-label="¿Por que lo necesitas?">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi accusantium hic alias nam ullam tenetur possimus dolorem officia aperiam. Cumque hic enim voluptas ratione accusamus quasi eaque amet labore doloribus?</p>
+                    </md-step>
 
-                            <md-step id="second" md-label="¿Como funciona?">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                            </md-step>
+                    <md-step id="second" md-label="¿Como funciona?">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                    </md-step>
 
-                            <md-step id="third" md-label="Preocupate de lo que importa">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                            </md-step>
-                        </md-steppers>
-                    </div>
-                </div>
+                    <md-step id="third" md-label="Preocupate de lo que importa">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                    </md-step>
+                </md-steppers>
             </div>    
         </div>
     </div>
