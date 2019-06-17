@@ -40,6 +40,10 @@
 
 	@import "~vue-material/dist/theme/all";
 
+	div#app{
+		overflow-x: hidden;
+	}
+
 	#nav h3{
 		color: white;
 

@@ -23,6 +23,7 @@ export default new Router({
       name: 'registrer',
       component: Registrer
     },
+    // FIXEA 404
     {
       path: '/*',
       name: 'error',
