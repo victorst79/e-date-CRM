@@ -7,10 +7,10 @@
 					<img src="./assets/e-date.png" alt="E-Date logotipo" class="logo">
 				</h3>				
 				<router-link to="/">
-					<md-button>Inicio</md-button>
+					<md-button>App</md-button>
 				</router-link>
 				<router-link to="/about">
-					<md-button>¿Que somos?</md-button>
+					<md-button>Informacion</md-button>
 				</router-link>
 				<router-link to="/registrer">
 					<md-button>Registro</md-button>
@@ -24,7 +24,8 @@
 		<notifications group="login" position="top center"/>
 		<notifications group="success" position="top center" class="success"/>
 		<md-toolbar md-elevation="0" class="footer container-fluid">
-			<span class="col-12 text-center">Developed by <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a></span>
+			<span class="col-12 text-center">Developed <a target="_blank" href="https://github.com/victorst79">Víctor Santaella Torres</a></span>
+			<span class="col-12 text-center">Code available on <a target="_blank" href="https://github.com/victorst79/e-date-CRM">Github</a></span>
 		</md-toolbar>
 	</div>
 </template>
@@ -65,7 +66,6 @@
 
 		span{
 			color: white;
-
 			a{
 				color: #673ab7;
 				text-decoration: none;

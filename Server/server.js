@@ -86,12 +86,16 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
                     socket.on('cancelar_reserva', function(data){
                         cancelar_reservaBD(data);
                         console.log('Reserva Cancelada con id: '+data);
+                        // NOTIFICACION CITA CANCELADA
+                        io.emit('reserva_cancelada',true);
                     });
                     
                     // CONFIRMAR RESERVA
                     socket.on('confirmar_reserva', function(data){
                         aceptar_reservaBD(data);
                         console.log('Reserva Aceptada con id: '+data);
+                        // NOTIFICACION RESERVA ACEPTADA
+                        io.emit('reserva_aceptada',true);
                     });
 
                     // AÑADIR PRODUCTO A STOCK

@@ -10,10 +10,12 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 
 // MATERIAL THEME
 import 'vue-material/dist/vue-material.min.css'
-// import 'vue-material/dist/theme/default.css'
+
+import './registerServiceWorker'
+
 Vue.use(VueMaterial);
 Vue.use(Notifications);
-// Vue.use(firestorePlugin)
+
 Vue.config.productionTip = false
 
 const linkActiveClass = 'my-link-active-class'
@@ -24,8 +26,8 @@ Vue.material.router.linkActiveClass = linkActiveClass
 // SOCKET CONNECTION
 Vue.use(new VueSocketIO({
   debug: true,
-  // connection: 'http://localhost:3000/',
-  connection: window.location.hostname
+  connection: 'http://localhost:3000/',
+  // connection: window.location.hostname
 }));
 
 new Vue({

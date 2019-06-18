@@ -34,30 +34,35 @@
                 </md-card-content>
             </md-card>
         </div>
-    </div>
-    <div class="no-user-explanation container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 no-user-explanation">
                 <h3 class="text-center">
                     ¿Como funciona?
                 </h3>
             </div>
             <div class="col-12">
                 <md-steppers md-vertical>
-                    <md-step id="first" md-label="¿Por que lo necesitas?">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi accusantium hic alias nam ullam tenetur possimus dolorem officia aperiam. Cumque hic enim voluptas ratione accusamus quasi eaque amet labore doloribus?</p>
+                    <md-step id="first" class="ti" md-label="¿Por que lo necesitas?">
+                        <p>
+                            Optimiza tu produccion, no gastes mas tiempo en atender nuevas citas o servicios mientras atiendes un cliente, con E-Date tu solo te ocupas de confirmar
+                            las citas, de esta forma tu cliente queda mas satisfecho y sin interrupciones.
+                        </p>
                     </md-step>
 
-                    <md-step id="second" md-label="¿Como funciona?">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                    <md-step id="second" class="ti" md-label="¿Como funciona?">
+                        <p>
+                            2 Vistas, Cliente y Administrador.
+                        </p>
+                        <p>
+                            El cliente reserva y puede ver sus citas pendientes. Mientras que el Administrador gestiona todas sus citas pendientes y proxima desde una misma vista.
+                            El administrador tambien dispone de una seccion para gestionar el inventario del negocio.
+                        </p>
                     </md-step>
 
-                    <md-step id="third" md-label="Preocupate de lo que importa">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+                    <md-step id="third" class="ti" md-label="¿Cuanto cuesta?">
+                        <p>
+                            Consulta con nosotros y te ayudaramos con la tarifa y plan mensual que mas se ajuste a tus necesidades: <a href="">info@edate.com</a>
+                        </p>
                     </md-step>
                 </md-steppers>
             </div>    

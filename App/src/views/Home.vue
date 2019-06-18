@@ -170,6 +170,7 @@
       </md-card>
     </div>
     <!-- FIN ADMIN COMPONENTE -->
+    <!-- DIALOGS Y SNACKBARS -->
   <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Añadir nuevo producto</md-dialog-title>
 
@@ -199,6 +200,31 @@
         <md-button class="md-primary" @click="showDialog = false" v-on:click="add_stock">Añadir</md-button>
       </md-dialog-actions>
     </md-dialog>
+
+    <!-- SNACKBAR LOGIN -->
+    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarLogin" md-persistent>
+      <span>Has iniciado sesion como {{this.user}}.</span>
+      <md-button class="md-primary" @click="showSnackbarLogin = false">Cerrar</md-button>
+    </md-snackbar>
+
+    <!-- SNACKBAR ERROR LOGIN -->
+    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarLoginError" md-persistent>
+      <span>Error Inicio de sesion.</span>
+      <md-button class="md-primary" @click="showSnackbarLoginError = false">Cerrar</md-button>
+    </md-snackbar>
+
+    <!-- SNACKBAR CITA RESERVADA -->
+    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarCitaReservada" md-persistent>
+      <span>Su cita ha sido aceptada.</span>
+      <md-button class="md-primary" @click="showSnackbarCitaReservada = false">Cerrar</md-button>
+    </md-snackbar>
+
+    <!-- SNACKBAR CITA CANCELADA -->
+    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarCitaCancelada" md-persistent>
+      <span>Su cita ha sido cancelada, ha sido redireccionado al inicio.</span>
+      <md-button class="md-primary" @click="showSnackbarCitaCancelada = false">Cerrar</md-button>
+    </md-snackbar>
+
   </section>  
 </template>
 
@@ -224,7 +250,12 @@ export default {
       nombre_producto: '',
       unidades_producto: '',
       precio_producto: '',
-      id_producto: ''
+      id_producto: '',
+      // SNACKBARS
+      showSnackbarLogin: false,
+      showSnackbarLoginError: false,
+      showSnackbarCitaReservada: false,
+      showSnackbarCitaCancelada: false
     }
   },
   methods: {
@@ -240,21 +271,13 @@ export default {
           this.data = this.firedb_user[i].data;
           // EVENTO CON SERVIDOR Y NOTIFICACION INTERNA
           this.$socket.emit('userLogin', JSON.stringify({user: this.user, rol: this.rol, data: this.data}));
-          this.$notify({
-            group: 'login',
-            title: 'Sesion  Iniciada',
-            text: 'Has iniciado sesion correctamente.'
-          });
+          // NOTIFICACION LOGIN
+          this.showSnackbarLogin = true;
           return;
         }
       }
       // NOTIFICACION ERROR
-      this.$notify({
-        group: 'error',
-        type: 'warn',
-        title: 'Error inicio session',
-        text: 'Los credenciales indicados no son correctos'
-      });
+      this.showSnackbarLoginError = true;
     },
     set_hora: function(hora){
       this.hora = hora;
@@ -268,30 +291,15 @@ export default {
         cliente: this.user
       }
       this.$socket.emit('new_reserva', JSON.stringify(nueva_cita));
-      this.$notify({
-        group: 'success',
-        title: 'Reserva Realizada',
-        text: 'Seras notificado cuando tu reserva sea aceptada.'
-      });
       this.data.cita.pendiente = 'reserva';
     },
     // CANCELAR UNA CITA
     cancelar_cita: function(cita_pendiente){
       this.$socket.emit('cancelar_reserva', cita_pendiente.id);
-      this.$notify({
-        group: 'success',
-        title: 'Reserva Cancelada',
-        text: 'Se ha cancelado la reserva, el usuario se ha notificado.'
-      });
     },
     // ACEPTAR UNA CITA
     confirmar_cita: function(cita_pendiente){
       this.$socket.emit('confirmar_reserva', cita_pendiente.id);
-      this.$notify({
-        group: 'success',
-        title: 'Reserva Confirmada',
-        text: 'Se ha confirmado la reserva, el usuario se ha notificado.'
-      });
     },
     // AÑADIR PRODUCTO AL STOCK DEL INVENTARIO
     add_stock: function(){
@@ -337,6 +345,22 @@ export default {
     inventario: function (data){
       var aux = JSON.parse(data);
       this.inventario = aux[0].inventario
+    },
+    // EVENTO RECIBE MODIFICACION DE CITA
+    reserva_aceptada: function(){
+      if(this.data.cita.pendiente == 'reserva'){
+        this.data.cita.pendiente = 'confirmada';
+        // NOTIFICACION USUARIO CITA RESERVADA
+        this.showSnackbarCitaReservada = true;
+      }
+    },
+    // EVENTO CITA CANCELADA
+    reserva_cancelada: function(){
+      if(this.data.cita.pendiente == 'reserva'){
+        this.data.cita.pendiente = 'sin cita';
+        // NOTIFICACION USUARIO CITA CANCELADA
+        this.showSnackbarCitaCancelada = true;
+      }
     }
   },
   computed: {
