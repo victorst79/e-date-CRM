@@ -202,25 +202,25 @@
     </md-dialog>
 
     <!-- SNACKBAR LOGIN -->
-    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarLogin" md-persistent>
+    <md-snackbar :md-position="positionSnackBars" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarLogin" md-persistent>
       <span>Has iniciado sesion como {{this.user}}.</span>
       <md-button class="md-primary" @click="showSnackbarLogin = false">Cerrar</md-button>
     </md-snackbar>
 
     <!-- SNACKBAR ERROR LOGIN -->
-    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarLoginError" md-persistent>
+    <md-snackbar :md-position="positionSnackBars" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarLoginError" md-persistent>
       <span>Error Inicio de sesion.</span>
       <md-button class="md-primary" @click="showSnackbarLoginError = false">Cerrar</md-button>
     </md-snackbar>
 
     <!-- SNACKBAR CITA RESERVADA -->
-    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarCitaReservada" md-persistent>
+    <md-snackbar :md-position="positionSnackBars" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarCitaReservada" md-persistent>
       <span>Su cita ha sido aceptada.</span>
       <md-button class="md-primary" @click="showSnackbarCitaReservada = false">Cerrar</md-button>
     </md-snackbar>
 
     <!-- SNACKBAR CITA CANCELADA -->
-    <md-snackbar :md-position="centered" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarCitaCancelada" md-persistent>
+    <md-snackbar :md-position="positionSnackBars" :md-duration="false ? Infinity : 4000" :md-active.sync="showSnackbarCitaCancelada" md-persistent>
       <span>Su cita ha sido cancelada, ha sido redireccionado al inicio.</span>
       <md-button class="md-primary" @click="showSnackbarCitaCancelada = false">Cerrar</md-button>
     </md-snackbar>
@@ -252,6 +252,7 @@ export default {
       precio_producto: '',
       id_producto: '',
       // SNACKBARS
+      positionSnackBars: 'center',
       showSnackbarLogin: false,
       showSnackbarLoginError: false,
       showSnackbarCitaReservada: false,

@@ -45,6 +45,22 @@ function add_productoBD(datos_producto){
     });
 }
 
+// NUEVO USUARIO
+function add_usuarioBD(datos_usuario,id){
+    var reservasRealizadasDB = firebase.database().ref('usuarios/'+id);
+    var usuario = reservasRealizadasDB.set({
+        user: datos_usuario.user,
+        pass: datos_usuario.pass,
+        rol: 'client',
+        data: {
+            cita: {
+                pendiente: 'sin cita'
+            },
+            local: 'Salon de Belleza Avenida'
+        }
+    });
+}
+
 // FIREBASE CONFIG
 var firebaseConfig = {
     apiKey: "AIzaSyA2w3M6RazrNteKGb0SoyaLuEG81xu7anA",
@@ -122,6 +138,19 @@ ref_usuarios.child('usuarios').on("value", function(snapshot){
 
             });
                       
+        });
+
+        socket.on('userRegistro', function(data){
+            var nuevo_registro = JSON.parse(data);
+            if(nuevo_registro.codigo_local == "avenida"){
+                add_usuarioBD(nuevo_registro,usuarios.length);
+                socket.emit('registro_completo',true);
+                console.log('Usuario Registrado: '+nuevo_registro.user);
+                return;
+            }else{
+                socket.emit('error_registro',true);
+                return;
+            }
         });
     });
 });

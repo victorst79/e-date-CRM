@@ -26,8 +26,8 @@ Vue.material.router.linkActiveClass = linkActiveClass
 // SOCKET CONNECTION
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'http://localhost:3000/',
-  // connection: window.location.hostname
+  // connection: 'http://localhost:3000/',
+  connection: window.location.hostname
 }));
 
 new Vue({
