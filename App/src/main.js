@@ -10,7 +10,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 
 // MATERIAL THEME
 import 'vue-material/dist/vue-material.min.css'
-
+// PWA SERVICE WORKER
 import './registerServiceWorker'
 
 Vue.use(VueMaterial);
@@ -20,14 +20,15 @@ Vue.config.productionTip = false
 
 const linkActiveClass = 'my-link-active-class'
 
-// pass custom class to Vue Material
+// Vue Material
 Vue.material.router.linkActiveClass = linkActiveClass
 
 // SOCKET CONNECTION
 Vue.use(new VueSocketIO({
-  debug: true,
-  // connection: 'http://localhost:3000/',
-  connection: window.location.hostname
+  debug: false,
+  // DESCOMENTAR PARA TRABAJO LOCAL
+  connection: 'http://localhost:3000/',
+  // connection: window.location.hostname
 }));
 
 new Vue({
