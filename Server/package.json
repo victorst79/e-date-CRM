@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/victorst79/e-date-CRM#readme",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "firebase": "^6.1.1",
     "socket.io": "^2.2.0"
   }
